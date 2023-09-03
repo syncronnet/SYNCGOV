@@ -39,7 +39,7 @@ Para usar a renderização no lado do servidor com SYNCGOV, siga estas etapas:
 
 ```bash
 # 1. Clone o Repositório
-git clone https://seu-repositorio.git
+git clone https://seu-repositorio.git](https://github.com/syncronnet/SYNCGOV.git
 cd seu-repositorio
 
 # 2. Configuração do Ambiente Virtual
