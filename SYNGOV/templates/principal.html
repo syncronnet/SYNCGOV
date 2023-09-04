@@ -6,6 +6,30 @@
     <title>SYNCGOV</title>
     <!-- Inclua o link para os arquivos CSS do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Adicione um estilo CSS para a barra de notificação -->
+    <style>
+        .notification-bar {
+            background-color: #007bff; /* Cor de fundo da barra de notificação */
+            color: white; /* Cor do texto da barra de notificação */
+            text-align: center; /* Centralizar texto na barra de notificação */
+            padding: 10px; /* Espaçamento interno da barra de notificação */
+            display: none; /* Inicialmente oculta */
+            position: fixed; /* Fixa no topo da página */
+            top: 0; /* No topo da página */
+            width: 100%; /* Largura total da página */
+            z-index: 9999; /* Coloca a barra de notificação na parte superior */
+            animation: slide-down 1s ease; /* Animação de slide para baixo */
+        }
+
+        @keyframes slide-down {
+            0% {
+                transform: translateY(-50px); /* Inicialmente, fora da tela */
+            }
+            100% {
+                transform: translateY(0); /* Desce para a tela */
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Menu Superior -->
@@ -21,7 +45,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="populacao.html">Populacao</a>
+                        <a class="nav-link" href="/principal/populacao.html">População</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Página 2</a>
@@ -36,6 +60,13 @@
 
     <!-- Conteúdo da Página -->
     <div class="container mt-5">
+        <!-- Adicione um botão para fechar a barra de notificação -->
+        <div class="notification-bar" id="notificationBar">
+            <span id="mensagem-de-boas-vindas"></span>
+            <button type="button" class="close" aria-label="Fechar" onclick="fecharNotificacao()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <h1>Bem-vindo ao SYNCGOV</h1>
         <p>Esta é a página principal da nossa aplicação.</p>
         <!-- Adicione mais conteúdo aqui -->
@@ -43,5 +74,35 @@
 
     <!-- Inclua o link para os arquivos JavaScript do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Seu script JavaScript -->
+    <script>
+        // Função para exibir a mensagem de boas-vindas na barra de notificação
+        function exibirMensagemBoasVindas(mensagem) {
+            var notificationBar = document.getElementById("notificationBar");
+            var mensagemDeBoasVindas = document.getElementById("mensagem-de-boas-vindas");
+
+            if (notificationBar && mensagemDeBoasVindas) {
+                mensagemDeBoasVindas.innerHTML = mensagem;
+                notificationBar.style.display = "block"; // Exibe a barra de notificação
+
+                // Configura um atraso de 1 segundo (1000 milissegundos) para fechar a mensagem
+                setTimeout(function() {
+                    fecharNotificacao();
+                }, 1000);
+            }
+        }
+
+        // Função para fechar a barra de notificação
+        function fecharNotificacao() {
+            var notificationBar = document.getElementById("notificationBar");
+            if (notificationBar) {
+                notificationBar.style.display = "none"; // Oculta a barra de notificação
+            }
+        }
+
+        // Chame a função para exibir a mensagem de boas-vindas (a mensagem agora vem da função logar)
+        exibirMensagemBoasVindas("{{ mensagem_boas_vindas }}");
+    </script>
 </body>
 </html>

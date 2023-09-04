@@ -1,4 +1,5 @@
 import json
+import random
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -50,6 +51,25 @@ def cadastro(request):
 @permission_classes((AllowAny,))
 def principal(request):
     return render(request, 'principal.html')
+# Lista de frases de boas-vindas
+frases_boas_vindas = [
+    "Bem-vindo de volta!",
+    "Ótimo ver você novamente!",
+    "Seja bem-vindo ao nosso sistema!",
+    "Esperamos que tenha um ótimo dia!",
+    "Que bom tê-lo de volta!",
+    "Saudações!",
+    "Você está conectado!",
+    "Bem-vindo ao nosso portal!",
+    "Estamos felizes em vê-lo novamente!",
+    "Aproveite o seu tempo aqui!"
+]
+
+# Função para obter uma frase de boas-vindas aleatória
+def obter_frase_boas_vindas():
+    return random.choice(frases_boas_vindas)
+
+
 @csrf_exempt
 @api_view(["POST"])
 @permission_classes((AllowAny,))
@@ -61,7 +81,10 @@ def logar(request):
         if usuario is not None:
             try:
                 login(request, usuario)
-                return HttpResponseRedirect('/principal/')
+                mensagem_boas_vindas = obter_frase_boas_vindas()
+                # Adicione a mensagem de boas-vindas às mensagens
+                return render(request, 'principal.html', {'mensagem_boas_vindas': mensagem_boas_vindas})
+                #return HttpResponseRedirect('/principal/')
                 
             except:
                 return redirect_mensagem(1, 'index',request, 'Não foi possivel fazer o login.')
